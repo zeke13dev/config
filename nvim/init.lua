@@ -5,6 +5,7 @@ require('lsp')           -- LSP configuration
 require('rust')    -- Rust-specific configurations
 require('theme')
 require('latex')
+require('c0')
 
 -- Load custom functions (defines `Init` and `Bye` commands)
 require('functions')
