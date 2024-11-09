@@ -1,16 +1,30 @@
 -- lua/theme.lua
-
--- List of allowed themes
-local allowed_themes = {
-    "onedark", "tokyonight", "tokyonight-storm"
+local allowed_theme_prefixes = {
+    "onedark", "tokyonight", "catppuccin",
+    "everforest", "gruvbox", "nord", "solarized", "material", "kanagawa", "nightfox", "carbonfox", "duskfox"
 }
 
--- Function to get only allowed colorschemes
+-- List of specific blacklisted themes (variations you want to exclude)
+local blacklisted_variations = {
+    "onedark_dark", "tokyonight-day", "catppuccin-latte", "catppuccin", "catppuccin-mocha", "gruvbox-material", "tokyonight", "tokyonight-night", "tokyonight-moon",
+    "material", "material-lighter", "material-oceanic", "kanagawa-lighter", "kanagawa-dragon"
+}
+
+-- Function to get only allowed colorschemes based on prefixes and blacklist
 local function get_allowed_colorschemes()
     local colors = vim.fn.getcompletion('', 'color')
     local filtered_colors = {}
     for _, color in ipairs(colors) do
-        if vim.tbl_contains(allowed_themes, color) then
+        local is_allowed = false
+        -- Check if color matches any allowed prefix
+        for _, prefix in ipairs(allowed_theme_prefixes) do
+            if color:match("^" .. prefix) then
+                is_allowed = true
+                break
+            end
+        end
+        -- Only add to filtered_colors if allowed and not blacklisted
+        if is_allowed and not vim.tbl_contains(blacklisted_variations, color) then
             table.insert(filtered_colors, color)
         end
     end

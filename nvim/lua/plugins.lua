@@ -1,5 +1,6 @@
 -- lua/plugins.lua
 
+
 -- Initialize Packer
 vim.cmd([[packadd packer.nvim]])
 
@@ -8,10 +9,12 @@ require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   -- Themes
-  use 'olimorris/onedarkpro.nvim'
   use 'folke/tokyonight.nvim'
   use { "catppuccin/nvim", as = "catppuccin" }
-  use 'Hiroya-W/sequoia-moonlight.nvim'
+  use 'marko-cerovac/material.nvim'
+  use 'rebelot/kanagawa.nvim'
+  use 'navarasu/onedark.nvim'
+  use "EdenEast/nightfox.nvim"
 
   -- Telescope for fuzzy finding
   use {
