@@ -3,6 +3,7 @@ require('settings')      -- Basic settings
 require('plugins')       -- Plugin setup and installation
 require('lsp')           -- LSP configuration
 require('rust')    -- Rust-specific configurations
+require('python')
 require('theme')
 require('latex')
 require('c0')

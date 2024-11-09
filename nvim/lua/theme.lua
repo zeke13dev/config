@@ -1,3 +1,12 @@
+-- better syntax highlighting
+require('nvim-treesitter.configs').setup {
+  ensure_installed = "all", -- use "all" for all languages or list specific languages
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+}
+
 -- lua/theme.lua
 local allowed_theme_prefixes = {
     "onedark", "tokyonight", "catppuccin",

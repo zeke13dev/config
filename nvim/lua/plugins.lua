@@ -16,6 +16,8 @@ require('packer').startup(function(use)
   use 'navarasu/onedark.nvim'
   use "EdenEast/nightfox.nvim"
 
+  use 'nvim-treesitter/nvim-treesitter'
+
   -- Telescope for fuzzy finding
   use {
     'nvim-telescope/telescope.nvim',
