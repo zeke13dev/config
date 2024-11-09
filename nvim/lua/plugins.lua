@@ -7,9 +7,11 @@ require('packer').startup(function(use)
   -- Packer itself
   use 'wbthomason/packer.nvim'
 
-  -- Themes (OnedarkPro & TokyoNight)
+  -- Themes
   use 'olimorris/onedarkpro.nvim'
   use 'folke/tokyonight.nvim'
+  use { "catppuccin/nvim", as = "catppuccin" }
+  use 'Hiroya-W/sequoia-moonlight.nvim'
 
   -- Telescope for fuzzy finding
   use {
