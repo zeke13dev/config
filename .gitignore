@@ -4,4 +4,4 @@
 !kitty/
 !nvim/**
 !kitty/**
-nvim/plugin/
+nvim/plugin/**
