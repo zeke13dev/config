@@ -1,5 +1,35 @@
 -- lua/theme.lua
 
+-- List of allowed themes
+local allowed_themes = {
+    "onedark", "tokyonight", "tokyonight-storm"
+}
+
+-- Function to get only allowed colorschemes
+local function get_allowed_colorschemes()
+    local colors = vim.fn.getcompletion('', 'color')
+    local filtered_colors = {}
+    for _, color in ipairs(colors) do
+        if vim.tbl_contains(allowed_themes, color) then
+            table.insert(filtered_colors, color)
+        end
+    end
+    return filtered_colors
+end
+
+-- Redefine the colorscheme command with completion
+vim.api.nvim_create_user_command('Theme', function(args)
+    vim.cmd('colorscheme ' .. args.args)
+end, {
+    nargs = 1,
+    complete = function()
+        return get_allowed_colorschemes()
+    end
+})
+
+-- Optional: Shortcut for opening the allowed colorscheme list
+vim.api.nvim_set_keymap('n', '<leader>cs', ':Theme ', { noremap = true, silent = false })
+
 -- TokyoNight Configuration
 vim.g.tokyonight_style = "storm"  -- Choose the storm style
 vim.g.tokyonight_italic_functions = true  -- Make functions italic

@@ -1,16 +1,20 @@
 -- lua/functions.lua
 
+-- Toggle diagnostic float
+local diagnostic_open = false  -- Track if the float is open
+
 local function ToggleDiagnosticFloat()
-  if vim.diagnostic.is_open() then
-    vim.cmd('echo')  -- Close float by clearing message
+  if diagnostic_open then
+    vim.cmd('echo')  -- Clear the message and close the float
+    diagnostic_open = false
   else
     vim.diagnostic.open_float(nil, { focusable = true, border = "rounded" })
+    diagnostic_open = true
   end
 end
 
 -- Initialize environment function
 local function init_environment()
-  vim.cmd('colorscheme tokyonight-storm')
   vim.cmd('NERDTreeToggle')
   vim.cmd('wincmd h')
   vim.cmd('vertical resize 20')
