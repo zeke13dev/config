@@ -49,8 +49,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/home/zeke/.cache/nvim/packer_hererocks/2.1.1713484068/share/lua/5.1/?.lua;/home/zeke/.cache/nvim/packer_hererocks/2.1.1713484068/share/lua/5.1/?/init.lua;/home/zeke/.cache/nvim/packer_hererocks/2.1.1713484068/lib/luarocks/rocks-5.1/?.lua;/home/zeke/.cache/nvim/packer_hererocks/2.1.1713484068/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/home/zeke/.cache/nvim/packer_hererocks/2.1.1713484068/lib/lua/5.1/?.so"
+local package_path_str = "/afs/andrew.cmu.edu/usr11/zbarnett/.cache/nvim/packer_hererocks/2.1.1713484068/share/lua/5.1/?.lua;/afs/andrew.cmu.edu/usr11/zbarnett/.cache/nvim/packer_hererocks/2.1.1713484068/share/lua/5.1/?/init.lua;/afs/andrew.cmu.edu/usr11/zbarnett/.cache/nvim/packer_hererocks/2.1.1713484068/lib/luarocks/rocks-5.1/?.lua;/afs/andrew.cmu.edu/usr11/zbarnett/.cache/nvim/packer_hererocks/2.1.1713484068/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/afs/andrew.cmu.edu/usr11/zbarnett/.cache/nvim/packer_hererocks/2.1.1713484068/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -74,60 +74,45 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  catppuccin = {
-    loaded = true,
-    path = "/home/zeke/.local/share/nvim/site/pack/packer/start/catppuccin",
-    url = "https://github.com/catppuccin/nvim"
-  },
   nerdtree = {
     loaded = true,
-    path = "/home/zeke/.local/share/nvim/site/pack/packer/start/nerdtree",
+    path = "/afs/andrew.cmu.edu/usr11/zbarnett/.local/share/nvim/site/pack/packer/start/nerdtree",
     url = "https://github.com/preservim/nerdtree"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
-    path = "/home/zeke/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
+    path = "/afs/andrew.cmu.edu/usr11/zbarnett/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
   ["onedarkpro.nvim"] = {
     loaded = true,
-    path = "/home/zeke/.local/share/nvim/site/pack/packer/start/onedarkpro.nvim",
+    path = "/afs/andrew.cmu.edu/usr11/zbarnett/.local/share/nvim/site/pack/packer/start/onedarkpro.nvim",
     url = "https://github.com/olimorris/onedarkpro.nvim"
   },
   ["packer.nvim"] = {
     loaded = true,
-    path = "/home/zeke/.local/share/nvim/site/pack/packer/start/packer.nvim",
+    path = "/afs/andrew.cmu.edu/usr11/zbarnett/.local/share/nvim/site/pack/packer/start/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
   },
   ["plenary.nvim"] = {
     loaded = true,
-    path = "/home/zeke/.local/share/nvim/site/pack/packer/start/plenary.nvim",
+    path = "/afs/andrew.cmu.edu/usr11/zbarnett/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
   ["rust-tools.nvim"] = {
     loaded = true,
-    path = "/home/zeke/.local/share/nvim/site/pack/packer/start/rust-tools.nvim",
+    path = "/afs/andrew.cmu.edu/usr11/zbarnett/.local/share/nvim/site/pack/packer/start/rust-tools.nvim",
     url = "https://github.com/simrat39/rust-tools.nvim"
-  },
-  ["sequoia-moonlight.nvim"] = {
-    loaded = true,
-    path = "/home/zeke/.local/share/nvim/site/pack/packer/start/sequoia-moonlight.nvim",
-    url = "https://github.com/Hiroya-W/sequoia-moonlight.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,
-    path = "/home/zeke/.local/share/nvim/site/pack/packer/start/telescope.nvim",
+    path = "/afs/andrew.cmu.edu/usr11/zbarnett/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
   ["tokyonight.nvim"] = {
     loaded = true,
-    path = "/home/zeke/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
+    path = "/afs/andrew.cmu.edu/usr11/zbarnett/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
     url = "https://github.com/folke/tokyonight.nvim"
-  },
-  vimtex = {
-    loaded = true,
-    path = "/home/zeke/.local/share/nvim/site/pack/packer/start/vimtex",
-    url = "https://github.com/lervag/vimtex"
   }
 }
 
