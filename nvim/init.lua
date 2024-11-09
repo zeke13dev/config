@@ -1,10 +1,10 @@
 -- Load individual configuration modules
+require('theme')
 require('settings')      -- Basic settings
 require('plugins')       -- Plugin setup and installation
-require('lsp')           -- LSP configuration
+-- require('lsp')           -- LSP configuration
 require('rust')    -- Rust-specific configurations
-require('theme')
-require('latex')
+require('python') -- Python-specific configurations
 
 -- Load custom functions (defines `Init` and `Bye` commands)
 require('functions')
