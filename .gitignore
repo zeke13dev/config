@@ -6,3 +6,4 @@
 !kitty/**
 !requirements.txt
 nvim/plugin/packer_compiled.lua
+nvim/all_in_one.lua
