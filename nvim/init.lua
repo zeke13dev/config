@@ -7,6 +7,7 @@ require('python')
 require('theme')
 require('latex')
 require('c0')
+require('c')
 
 -- Load custom functions (defines `Init` and `Bye` commands)
 require('functions')
