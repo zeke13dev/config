@@ -43,6 +43,7 @@ end
 -- Redefine the colorscheme command with completion
 vim.api.nvim_create_user_command('Theme', function(args)
     vim.cmd('colorscheme ' .. args.args)
+    vim.cmd('highlight! Cursor guifg=NONE guibg=#c792ea')
 end, {
     nargs = 1,
     complete = function()
