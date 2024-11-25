@@ -61,8 +61,13 @@ vim.g.tokyonight_sidebars = { "qf", "terminal" }  -- Sidebar settings
 -- Ensure true color support
 vim.o.termguicolors = true
 
--- Load the TokyoNight colorscheme
-vim.cmd([[colorscheme tokyonight]])
+-- Load the Material Palenight colorscheme
+vim.cmd([[colorscheme material-palenight]])
+
+-- Fix the cursor color
+vim.cmd([[
+  highlight! Cursor guifg=NONE guibg=#c792ea
+]])
 
 -- Use TokyoNight's diagnostic highlights for LSP
 vim.fn.sign_define("DiagnosticSignError", { text = "✗", texthl = "DiagnosticError" })
