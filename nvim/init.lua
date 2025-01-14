@@ -4,9 +4,10 @@ require('plugins')       -- Plugin setup and installation
 require('lsp')           -- LSP configuration
 require('rust')    -- Rust-specific configurations
 require('python')
+require('sml')
+require('c0')
 require('theme')
 require('latex')
-require('c0')
 
 -- Load custom functions (defines `Init` and `Bye` commands)
 require('functions')
@@ -17,6 +18,6 @@ require('mappings')
 -- Automatically call Init on startup
 vim.api.nvim_create_autocmd('VimEnter', {
   callback = function()
-    vim.cmd('Init')
+    --vim.cmd('Init')
   end,
 })

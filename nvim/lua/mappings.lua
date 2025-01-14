@@ -47,3 +47,7 @@ vim.api.nvim_set_keymap('n', '<leader>e', '<Cmd>Telescope diagnostics<CR>', { no
 -- Use Telescope to show diagnostics filtered by buffer in a split
 vim.api.nvim_set_keymap('n', '<leader>E', '<Cmd>Telescope diagnostics bufnr=0<CR>', { noremap = true, silent = true })
 
+-- silly ahh canada
+vim.api.nvim_set_keymap('n', '<Leader>L', 'ithe mediocre province of British Columbia<Esc>', { noremap = true, silent = true })
+
+

@@ -14,7 +14,7 @@ local function ToggleDiagnosticFloat()
 end
 
 -- Initialize environment function
-local function init_environment()
+local function init_environment_old()
   vim.cmd('NERDTreeToggle')
   vim.cmd('wincmd h')
   vim.cmd('vertical resize 20')
@@ -26,6 +26,14 @@ local function init_environment()
   vim.cmd('wincmd k')
 end
 
+local function init_environment()
+  vim.cmd('split')
+  vim.cmd('vsplit')
+  vim.cmd('wincmd j')
+  vim.cmd('terminal')
+  vim.cmd('resize 8')
+  vim.cmd('wincmd k')
+end
 -- Custom quit command to close terminals and exit Neovim
 local function bye()
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do

@@ -3,6 +3,9 @@ require('settings')      -- Basic settings
 require('plugins')       -- Plugin setup and installation
 require('lsp')           -- LSP configuration
 require('rust')    -- Rust-specific configurations
+require('python')
+require('sml')
+require('c0')
 require('theme')
 require('latex')
 
@@ -18,6 +21,25 @@ vim.api.nvim_create_autocmd('VimEnter', {
     vim.cmd('Init')
   end,
 })
+
+-- File: lua//c0.lua --
+
+-- Create an autocommand to set filetype for .c0 and .c1 files
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "*.c0", "*.c1" },
+  callback = function()
+    vim.bo.filetype = "c0_syntax"
+  end,
+})
+
+-- Optionally print a message when the syntax file is loaded (for debugging)
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "c0_syntax",
+  callback = function()
+    print("Loaded c0_syntax for .c0/.c1 files")
+  end,
+})
+
 
 -- File: lua//functions.lua --
 
@@ -37,7 +59,7 @@ local function ToggleDiagnosticFloat()
 end
 
 -- Initialize environment function
-local function init_environment()
+local function init_environment_old()
   vim.cmd('NERDTreeToggle')
   vim.cmd('wincmd h')
   vim.cmd('vertical resize 20')
@@ -49,6 +71,14 @@ local function init_environment()
   vim.cmd('wincmd k')
 end
 
+local function init_environment()
+  vim.cmd('split')
+  vim.cmd('vsplit')
+  vim.cmd('wincmd j')
+  vim.cmd('terminal')
+  vim.cmd('resize 8')
+  vim.cmd('wincmd k')
+end
 -- Custom quit command to close terminals and exit Neovim
 local function bye()
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -106,21 +136,6 @@ end, {})
 
 -- File: lua//lsp.lua --
 
--- Basic LSP setup
-require('lspconfig').rust_analyzer.setup({
-  settings = {
-    ["rust-analyzer"] = {
-      cargo = { allFeatures = true },
-      checkOnSave = { command = "clippy" },
-    }
-  },
-  on_attach = function(_, bufnr)
-    local opts = { noremap=true, silent=true }
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  end
-})
-
 
 -- File: lua//mappings.lua --
 
@@ -147,10 +162,11 @@ vim.api.nvim_set_keymap('n', 'J', '<C-w>j', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'K', '<C-w>k', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'L', '<C-w>l', { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', '<C-H>', ':vertical resize -2<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-J>', ':resize -2<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-K>', ':resize +2<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-L>', ':vertical resize +2<CR>', { noremap = true, silent = true })
+-- Resize splits using ctrl+shift+movement_key
+vim.api.nvim_set_keymap('n', '<C-S-l>', ':vertical resize -2<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-S-j>', ':resize +2<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-S-k>', ':resize -2<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-S-h>', ':vertical resize +2<CR>', { noremap = true, silent = true })
 
 -- Remap Esc in terminal mode to normal mode
 vim.api.nvim_set_keymap('t', '<Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
@@ -172,10 +188,15 @@ vim.api.nvim_set_keymap('n', '<leader>e', '<Cmd>Telescope diagnostics<CR>', { no
 -- Use Telescope to show diagnostics filtered by buffer in a split
 vim.api.nvim_set_keymap('n', '<leader>E', '<Cmd>Telescope diagnostics bufnr=0<CR>', { noremap = true, silent = true })
 
+-- silly ahh canada
+vim.api.nvim_set_keymap('n', '<Leader>L', 'ithe mediocre province of British Columbia<Esc>', { noremap = true, silent = true })
+
+
 
 -- File: lua//plugins.lua --
 
 -- lua/plugins.lua
+
 
 -- Initialize Packer
 vim.cmd([[packadd packer.nvim]])
@@ -184,9 +205,15 @@ require('packer').startup(function(use)
   -- Packer itself
   use 'wbthomason/packer.nvim'
 
-  -- Themes (OnedarkPro & TokyoNight)
-  use 'olimorris/onedarkpro.nvim'
+  -- Themes
   use 'folke/tokyonight.nvim'
+  use { "catppuccin/nvim", as = "catppuccin" }
+  use 'marko-cerovac/material.nvim'
+  use 'rebelot/kanagawa.nvim'
+  use 'navarasu/onedark.nvim'
+  use "EdenEast/nightfox.nvim"
+
+  use 'nvim-treesitter/nvim-treesitter'
 
   -- Telescope for fuzzy finding
   use {
@@ -201,8 +228,91 @@ require('packer').startup(function(use)
   use 'neovim/nvim-lspconfig'
   use 'simrat39/rust-tools.nvim'
   use 'lervag/vimtex'
+
+  use {
+  'saecki/crates.nvim',
+  requires = { 'nvim-lua/plenary.nvim' },
+  config = function()
+    require('crates').setup()
+  end,
+}
+
+  -- DUCKIES
+  use {
+    'tamton-aquib/duck.nvim',
+    config = function()
+        vim.keymap.set('n', '<leader>dd', function() require("duck").hatch("🦆", 10) end, {}) -- Fast duck
+        vim.keymap.set('n', '<leader>dc', function() require("duck").hatch("🐈", 0.75) end, {}) -- Mellow cat
+        vim.keymap.set('n', '<leader>dk', function() require("duck").cook() end, {})
+        vim.keymap.set('n', '<leader>da', function() require("duck").cook_all() end, {})
+    end
+  }
 end)
 
+
+-- File: lua//python.lua --
+
+require('lspconfig').pyright.setup({
+  on_attach = function(_, bufnr)
+    local opts = { noremap = true, silent = true }
+    -- Keymaps for LSP actions
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    -- Auto-format and lint on save
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      callback = function()
+        -- Run flake8 asynchronously
+        vim.fn.jobstart("flake8 " .. vim.fn.expand("%"), {
+          stdout_buffered = true,
+          stderr_buffered = true,
+          on_exit = function(_, exit_code)
+            if exit_code == 0 then
+              -- If no linting errors, format with black asynchronously
+              vim.fn.jobstart("black " .. vim.fn.expand("%"), {
+                stdout_buffered = true,
+                stderr_buffered = true,
+                on_exit = function(_, black_exit_code)
+                  if black_exit_code ~= 0 then
+                    print("Black formatting failed.")
+                  end
+                end,
+              })
+            else
+              print("flake8 detected issues. Skipping black formatting.")
+            end
+          end,
+        })
+        -- Use LSP to apply code fixes asynchronously (if available)
+        vim.lsp.buf.code_action({
+          context = { only = { "source.fixAll" } },
+          apply = true,
+        })
+        -- Format with LSP as well (non-blocking)
+        vim.lsp.buf.format({ async = true })
+      end,
+    })
+  end,
+  settings = {
+    python = {
+      analysis = {
+        typeCheckingMode = "basic",  -- Options: off, basic, strict
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+      },
+      pythonPath = (function()
+        -- Automatically find the Python interpreter from the virtual environment
+        local venv_path = vim.fn.getcwd() .. "/venv/bin/python3"
+        if vim.fn.executable(venv_path) == 1 then
+          return venv_path
+        else
+          -- Fallback to system Python if no virtual environment is found
+          return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+        end
+      end)()
+    },
+  },
+})
 
 -- File: lua//rust.lua --
 
@@ -215,30 +325,35 @@ require('rust-tools').setup({
     },
   },
   server = {
-    on_attach = function(_, bufnr)
-      local opts = { noremap=true, silent=true }
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-
-      -- Enable linting on save
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        buffer = bufnr,
-        callback = function()
-          vim.lsp.buf.format({ async = true })  -- Auto-format on save
-          vim.lsp.buf.code_action({  -- Run code actions, such as clippy warnings
-            context = { only = { "source.fixAll" } },
-            apply = true,
-          })
-        end,
-      })
-    end,
     settings = {
       ["rust-analyzer"] = {
-        checkOnSave = {
-          command = "clippy", -- Use `clippy` to lint on save
+        cargo = { allFeatures = true },
+        checkOnSave = { command = "clippy" },
+        diagnostics = {
+          ignored = { ".cargo/**" }, -- Ignore `.cargo` directory
         },
       },
     },
+    on_attach = function(client, bufnr)
+      local opts = { noremap = true, silent = true }
+      vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+      vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+
+      -- Add a new BufWritePre autocmd for synchronous formatting using rustfmt
+      vim.api.nvim_create_autocmd("BufWritePre", {
+          buffer = bufnr,
+          callback = function()
+            -- Attempt to format the buffer synchronously, suppressing errors
+            local success, err = pcall(function()
+              vim.lsp.buf.format({ async = false })
+            end)
+            if not success then
+              -- Optionally log or handle the error silently
+              -- print("Formatting error: " .. err)  -- Uncomment to log errors if needed
+            end
+          end,
+        })
+    end,
   },
 })
 
@@ -262,21 +377,59 @@ vim.o.wrap = false
 -- Use system clipboard
 vim.o.clipboard = 'unnamedplus'
 
--- File: lua//theme.lua --
+-- File: lua//sml.lua --
 
--- lua/theme.lua
+-- Millet LSP Configuration
+local lspconfig = require('lspconfig')
 
--- List of allowed themes
-local allowed_themes = {
-    "onedark", "tokyonight", "tokyonight-storm"
+lspconfig.millet.setup {
+  cmd = { "millet-ls" },
+  filetypes = { "sml" },
+  root_dir = lspconfig.util.root_pattern(".millet.toml", ".git") or vim.fn.getcwd(),
+  on_attach = function(client, bufnr)
+    print("Millet attached to buffer " .. bufnr)
+  end,
 }
 
--- Function to get only allowed colorschemes
+
+-- File: lua//theme.lua --
+
+-- better syntax highlighting
+require('nvim-treesitter.configs').setup {
+  ensure_installed = "all", -- use "all" for all languages or list specific languages
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+}
+
+-- lua/theme.lua
+local allowed_theme_prefixes = {
+    "onedark", "tokyonight", "catppuccin",
+    "everforest", "gruvbox", "nord", "solarized", "material", "kanagawa", "nightfox", "carbonfox", "duskfox"
+}
+
+-- List of specific blacklisted themes (variations you want to exclude)
+local blacklisted_variations = {
+    "onedark_dark", "tokyonight-day", "catppuccin-latte", "catppuccin", "catppuccin-mocha", "gruvbox-material", "tokyonight", "tokyonight-night", "tokyonight-moon",
+    "material", "material-lighter", "material-oceanic", "kanagawa-lighter", "kanagawa-dragon"
+}
+
+-- Function to get only allowed colorschemes based on prefixes and blacklist
 local function get_allowed_colorschemes()
     local colors = vim.fn.getcompletion('', 'color')
     local filtered_colors = {}
     for _, color in ipairs(colors) do
-        if vim.tbl_contains(allowed_themes, color) then
+        local is_allowed = false
+        -- Check if color matches any allowed prefix
+        for _, prefix in ipairs(allowed_theme_prefixes) do
+            if color:match("^" .. prefix) then
+                is_allowed = true
+                break
+            end
+        end
+        -- Only add to filtered_colors if allowed and not blacklisted
+        if is_allowed and not vim.tbl_contains(blacklisted_variations, color) then
             table.insert(filtered_colors, color)
         end
     end
@@ -286,6 +439,7 @@ end
 -- Redefine the colorscheme command with completion
 vim.api.nvim_create_user_command('Theme', function(args)
     vim.cmd('colorscheme ' .. args.args)
+    vim.cmd('highlight! Cursor guifg=NONE guibg=#c792ea')
 end, {
     nargs = 1,
     complete = function()
@@ -304,8 +458,13 @@ vim.g.tokyonight_sidebars = { "qf", "terminal" }  -- Sidebar settings
 -- Ensure true color support
 vim.o.termguicolors = true
 
--- Load the TokyoNight colorscheme
-vim.cmd([[colorscheme tokyonight]])
+-- Load the Material Palenight colorscheme
+vim.cmd([[colorscheme carbonfox]])
+
+-- Fix the cursor color
+vim.cmd([[
+  highlight! Cursor guifg=NONE guibg=#c792ea
+]])
 
 -- Use TokyoNight's diagnostic highlights for LSP
 vim.fn.sign_define("DiagnosticSignError", { text = "✗", texthl = "DiagnosticError" })

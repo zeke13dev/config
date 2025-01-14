@@ -63,7 +63,7 @@ vim.g.tokyonight_sidebars = { "qf", "terminal" }  -- Sidebar settings
 vim.o.termguicolors = true
 
 -- Load the Material Palenight colorscheme
-vim.cmd([[colorscheme material-palenight]])
+vim.cmd([[colorscheme carbonfox]])
 
 -- Fix the cursor color
 vim.cmd([[
