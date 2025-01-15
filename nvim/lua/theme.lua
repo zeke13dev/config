@@ -1,11 +1,49 @@
 -- better syntax highlighting
 require('nvim-treesitter.configs').setup {
-  ensure_installed = "all", -- use "all" for all languages or list specific languages
+  ensure_installed = { "python", "rust", "lua", "c" }, -- Use a table for specific languages
   highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
+    enable = true, -- Enable highlighting
+    additional_vim_regex_highlighting = false, -- Disable additional Vim regex highlighting
   },
 }
+
+-- A variable to track the cat's current position
+local cat_position = 0
+
+local function moving_cat()
+  local width = vim.o.columns
+  -- Increment position, reset if it exceeds the screen width
+  cat_position = (cat_position + 1) % width
+  local spaces = string.rep(" ", cat_position) -- Add spaces to move the cat
+  return spaces .. "🐈" -- Return the cat at the new position
+end
+
+-- bottom bar
+require('lualine').setup {
+  options = {
+    theme = 'carbonfox', -- Match with your colorscheme
+    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
+    icons_enabled = true,
+  },
+  sections = {
+    lualine_a = { 'mode' },
+    lualine_b = { 'branch', 'diff', 'diagnostics' },
+    lualine_c = { 'filename' },
+    lualine_x = {
+      moving_cat, -- Add the cat here
+      'encoding',
+      'fileformat',
+      'filetype',
+    },
+    lualine_y = { 'progress' },
+    lualine_z = { 'location' },
+  },
+}
+
+vim.loop.new_timer():start(0, 100, vim.schedule_wrap(function()
+  vim.cmd('redrawstatus')
+end))
 
 -- lua/theme.lua
 local allowed_theme_prefixes = {

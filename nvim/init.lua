@@ -15,6 +15,8 @@ require('functions')
 -- Load key mappings
 require('mappings')
 
+--vim.g.netrw_ssh_cmd = "sshpass -p 'your_password' ssh -o PubkeyAuthentication=no"
+
 -- Automatically call Init on startup
 vim.api.nvim_create_autocmd('VimEnter', {
   callback = function()

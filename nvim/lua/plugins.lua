@@ -8,7 +8,15 @@ require('packer').startup(function(use)
   -- Packer itself
   use 'wbthomason/packer.nvim'
 
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
+
+
   -- Themes
+  use 'lewis6991/impatient.nvim'
+  use 'folke/trouble.nvim'
   use 'folke/tokyonight.nvim'
   use { "catppuccin/nvim", as = "catppuccin" }
   use 'marko-cerovac/material.nvim'

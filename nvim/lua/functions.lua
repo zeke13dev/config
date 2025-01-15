@@ -34,6 +34,8 @@ local function init_environment()
   vim.cmd('resize 8')
   vim.cmd('wincmd k')
 end
+
+
 -- Custom quit command to close terminals and exit Neovim
 local function bye()
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do

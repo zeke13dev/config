@@ -18,7 +18,7 @@ require('mappings')
 -- Automatically call Init on startup
 vim.api.nvim_create_autocmd('VimEnter', {
   callback = function()
-    vim.cmd('Init')
+    --vim.cmd('Init')
   end,
 })
 
@@ -379,16 +379,18 @@ vim.o.clipboard = 'unnamedplus'
 
 -- File: lua//sml.lua --
 
--- Millet LSP Configuration
 local lspconfig = require('lspconfig')
 
 lspconfig.millet.setup {
-  cmd = { "millet-ls" },
-  filetypes = { "sml" },
-  root_dir = lspconfig.util.root_pattern(".millet.toml", ".git") or vim.fn.getcwd(),
-  on_attach = function(client, bufnr)
-    print("Millet attached to buffer " .. bufnr)
-  end,
+    cmd = { "millet-ls" },
+    filetypes = { "sml" },
+    -- Use current working directory when no project file is detected
+    root_dir = function(fname)
+        return lspconfig.util.root_pattern(".millet.toml", ".git")(fname) or vim.loop.cwd()
+    end,
+    on_attach = function(client, bufnr)
+        print("Millet attached to buffer " .. bufnr)
+    end,
 }
 
 

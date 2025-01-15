@@ -91,10 +91,20 @@ _G.packer_plugins = {
     path = "/Users/zeke/.local/share/nvim/site/pack/packer/start/duck.nvim",
     url = "https://github.com/tamton-aquib/duck.nvim"
   },
+  ["impatient.nvim"] = {
+    loaded = true,
+    path = "/Users/zeke/.local/share/nvim/site/pack/packer/start/impatient.nvim",
+    url = "https://github.com/lewis6991/impatient.nvim"
+  },
   ["kanagawa.nvim"] = {
     loaded = true,
     path = "/Users/zeke/.local/share/nvim/site/pack/packer/start/kanagawa.nvim",
     url = "https://github.com/rebelot/kanagawa.nvim"
+  },
+  ["lualine.nvim"] = {
+    loaded = true,
+    path = "/Users/zeke/.local/share/nvim/site/pack/packer/start/lualine.nvim",
+    url = "https://github.com/nvim-lualine/lualine.nvim"
   },
   ["material.nvim"] = {
     loaded = true,
@@ -120,6 +130,12 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/zeke/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
+  },
+  ["nvim-web-devicons"] = {
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/zeke/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons",
+    url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
   ["onedark.nvim"] = {
     loaded = true,
@@ -151,6 +167,11 @@ _G.packer_plugins = {
     path = "/Users/zeke/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
     url = "https://github.com/folke/tokyonight.nvim"
   },
+  ["trouble.nvim"] = {
+    loaded = true,
+    path = "/Users/zeke/.local/share/nvim/site/pack/packer/start/trouble.nvim",
+    url = "https://github.com/folke/trouble.nvim"
+  },
   vimtex = {
     loaded = true,
     path = "/Users/zeke/.local/share/nvim/site/pack/packer/start/vimtex",
@@ -159,14 +180,14 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: duck.nvim
-time([[Config for duck.nvim]], true)
-try_loadstring("\27LJ\2\n?\0\0\4\0\4\0\b6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0)\3\n\0B\0\3\1K\0\1\0\tü¶Ü\nhatch\tduck\frequireE\0\0\4\0\4\1\b6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0*\3\0\0B\0\3\1K\0\1\0\tüêà\nhatch\tduck\frequire\1ÄÄ†ˇ\0031\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\tcook\tduck\frequire5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\rcook_all\tduck\frequireÃ\1\1\0\6\0\f\0!6\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0003\4\5\0004\5\0\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\6\0003\4\a\0004\5\0\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\b\0003\4\t\0004\5\0\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\n\0003\4\v\0004\5\0\0B\0\5\1K\0\1\0\0\15<leader>da\0\15<leader>dk\0\15<leader>dc\0\15<leader>dd\6n\bset\vkeymap\bvim\0", "config", "duck.nvim")
-time([[Config for duck.nvim]], false)
 -- Config for: crates.nvim
 time([[Config for crates.nvim]], true)
 try_loadstring("\27LJ\2\n4\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\vcrates\frequire\0", "config", "crates.nvim")
 time([[Config for crates.nvim]], false)
+-- Config for: duck.nvim
+time([[Config for duck.nvim]], true)
+try_loadstring("\27LJ\2\n?\0\0\4\0\4\0\b6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0)\3\n\0B\0\3\1K\0\1\0\tü¶Ü\nhatch\tduck\frequireE\0\0\4\0\4\1\b6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0*\3\0\0B\0\3\1K\0\1\0\tüêà\nhatch\tduck\frequire\1ÄÄ†ˇ\0031\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\tcook\tduck\frequire5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\rcook_all\tduck\frequireÃ\1\1\0\6\0\f\0!6\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0003\4\5\0004\5\0\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\6\0003\4\a\0004\5\0\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\b\0003\4\t\0004\5\0\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\n\0003\4\v\0004\5\0\0B\0\5\1K\0\1\0\0\15<leader>da\0\15<leader>dk\0\15<leader>dc\0\15<leader>dd\6n\bset\vkeymap\bvim\0", "config", "duck.nvim")
+time([[Config for duck.nvim]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

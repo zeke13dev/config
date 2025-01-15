@@ -51,3 +51,8 @@ vim.api.nvim_set_keymap('n', '<leader>E', '<Cmd>Telescope diagnostics bufnr=0<CR
 vim.api.nvim_set_keymap('n', '<Leader>L', 'ithe mediocre province of British Columbia<Esc>', { noremap = true, silent = true })
 
 
+-- ssh
+vim.keymap.set('n', '<leader>ssh', function()
+    vim.cmd('edit sftp://andrew-cmu/')
+end, { noremap = true, silent = true, desc = "Connect and navigate with NERDTree" })
+
