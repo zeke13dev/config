@@ -15,6 +15,8 @@ require('functions')
 -- Load key mappings
 require('mappings')
 
+--vim.g.netrw_ssh_cmd = "sshpass -p 'your_password' ssh -o PubkeyAuthentication=no"
+
 -- Automatically call Init on startup
 vim.api.nvim_create_autocmd('VimEnter', {
   callback = function()
@@ -79,6 +81,8 @@ local function init_environment()
   vim.cmd('resize 8')
   vim.cmd('wincmd k')
 end
+
+
 -- Custom quit command to close terminals and exit Neovim
 local function bye()
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -124,14 +128,32 @@ vim.api.nvim_create_user_command('TexSplitCompile', function()
   else
     print("Zathura is already running.")
   end
-
-  -- Step 3: Use Yabai to tile the windows
-  vim.fn.system("yabai -m window --focus $(pgrep -x zathura)")
-  vim.fn.system("yabai -m window --display 1 --space 1")
-  vim.fn.system("yabai -m window --focus $(pgrep -x nvim)")
-  vim.fn.system("yabai -m window --display 1 --space 2")
-
 end, {})
+
+require('lspconfig').texlab.setup({
+    settings = {
+        texlab = {
+            build = {
+                executable = "latexmk",
+                args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+                onSave = true,
+            },
+            forwardSearch = {
+                executable = "zathura",
+                args = { "--synctex-forward", "%l:1:%f", "%p" },
+            },
+        },
+    },
+})
+
+-- Enable line wrapping for LaTeX files
+vim.cmd([[
+  augroup LaTeXLineWrap
+    autocmd!
+    autocmd FileType tex setlocal wrap
+  augroup END
+]])
+
 
 
 -- File: lua//lsp.lua --
@@ -192,6 +214,15 @@ vim.api.nvim_set_keymap('n', '<leader>E', '<Cmd>Telescope diagnostics bufnr=0<CR
 vim.api.nvim_set_keymap('n', '<Leader>L', 'ithe mediocre province of British Columbia<Esc>', { noremap = true, silent = true })
 
 
+-- ssh
+vim.keymap.set('n', '<leader>ssh', function()
+    vim.cmd('edit sftp://andrew-cmu/')
+end, { noremap = true, silent = true, desc = "Connect and navigate with NERDTree" })
+
+
+-- latex
+vim.api.nvim_set_keymap('n', '<leader>lc', ':TexSplitCompile<CR>', { noremap = true, silent = true })
+
 
 -- File: lua//plugins.lua --
 
@@ -205,7 +236,15 @@ require('packer').startup(function(use)
   -- Packer itself
   use 'wbthomason/packer.nvim'
 
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
+
+
   -- Themes
+  use 'lewis6991/impatient.nvim'
+  use 'folke/trouble.nvim'
   use 'folke/tokyonight.nvim'
   use { "catppuccin/nvim", as = "catppuccin" }
   use 'marko-cerovac/material.nvim'
@@ -379,31 +418,75 @@ vim.o.clipboard = 'unnamedplus'
 
 -- File: lua//sml.lua --
 
+--[[
+local configs = require('lspconfig.configs')
 local lspconfig = require('lspconfig')
 
-lspconfig.millet.setup {
-    cmd = { "millet-ls" },
-    filetypes = { "sml" },
-    -- Use current working directory when no project file is detected
-    root_dir = function(fname)
-        return lspconfig.util.root_pattern(".millet.toml", ".git")(fname) or vim.loop.cwd()
-    end,
-    on_attach = function(client, bufnr)
-        print("Millet attached to buffer " .. bufnr)
-    end,
-}
+if not configs.millet_ls then
+  configs.millet_ls = {
+    default_config = {
+      cmd = { "millet-ls" },
+      filetypes = { "sml" },
+      root_dir = lspconfig.util.root_pattern("millet.toml", ".git", "."),
+      single_file_support = true,
+      on_attach = function(client, bufnr)
+        print("Millet LSP attached to buffer " .. bufnr)
+      end,
+    },
+  }
+end
 
+lspconfig.millet_ls.setup({})
+--]]
 
 -- File: lua//theme.lua --
 
 -- better syntax highlighting
 require('nvim-treesitter.configs').setup {
-  ensure_installed = "all", -- use "all" for all languages or list specific languages
+  ensure_installed = { "latex", "python", "rust", "lua", "c" }, -- Use a table for specific languages
   highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
+    enable = true, -- Enable highlighting
+    additional_vim_regex_highlighting = false, -- Disable additional Vim regex highlighting
   },
 }
+
+-- A variable to track the cat's current position
+local cat_position = 0
+
+local function moving_cat()
+  local width = vim.o.columns
+  -- Increment position, reset if it exceeds the screen width
+  cat_position = (cat_position + 1) % width
+  local spaces = string.rep(" ", cat_position) -- Add spaces to move the cat
+  return spaces .. "🐈" -- Return the cat at the new position
+end
+
+-- bottom bar
+require('lualine').setup {
+  options = {
+    theme = 'carbonfox', -- Match with your colorscheme
+    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
+    icons_enabled = true,
+  },
+  sections = {
+    lualine_a = { 'mode' },
+    lualine_b = { 'branch', 'diff', 'diagnostics' },
+    lualine_c = { 'filename' },
+    lualine_x = {
+      moving_cat, -- Add the cat here
+      'encoding',
+      'fileformat',
+      'filetype',
+    },
+    lualine_y = { 'progress' },
+    lualine_z = { 'location' },
+  },
+}
+
+vim.loop.new_timer():start(0, 100, vim.schedule_wrap(function()
+  vim.cmd('redrawstatus')
+end))
 
 -- lua/theme.lua
 local allowed_theme_prefixes = {

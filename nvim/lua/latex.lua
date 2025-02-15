@@ -15,12 +15,30 @@ vim.api.nvim_create_user_command('TexSplitCompile', function()
   else
     print("Zathura is already running.")
   end
-
-  -- Step 3: Use Yabai to tile the windows
-  vim.fn.system("yabai -m window --focus $(pgrep -x zathura)")
-  vim.fn.system("yabai -m window --display 1 --space 1")
-  vim.fn.system("yabai -m window --focus $(pgrep -x nvim)")
-  vim.fn.system("yabai -m window --display 1 --space 2")
-
 end, {})
+
+require('lspconfig').texlab.setup({
+    settings = {
+        texlab = {
+            build = {
+                executable = "latexmk",
+                args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+                onSave = true,
+            },
+            forwardSearch = {
+                executable = "zathura",
+                args = { "--synctex-forward", "%l:1:%f", "%p" },
+            },
+        },
+    },
+})
+
+-- Enable line wrapping for LaTeX files
+vim.cmd([[
+  augroup LaTeXLineWrap
+    autocmd!
+    autocmd FileType tex setlocal wrap
+  augroup END
+]])
+
 

@@ -1,6 +1,6 @@
 -- better syntax highlighting
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { "python", "rust", "lua", "c" }, -- Use a table for specific languages
+  ensure_installed = { "latex", "python", "rust", "lua", "c" }, -- Use a table for specific languages
   highlight = {
     enable = true, -- Enable highlighting
     additional_vim_regex_highlighting = false, -- Disable additional Vim regex highlighting

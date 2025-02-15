@@ -56,3 +56,7 @@ vim.keymap.set('n', '<leader>ssh', function()
     vim.cmd('edit sftp://andrew-cmu/')
 end, { noremap = true, silent = true, desc = "Connect and navigate with NERDTree" })
 
+
+-- latex
+vim.api.nvim_set_keymap('n', '<leader>lc', ':TexSplitCompile<CR>', { noremap = true, silent = true })
+
