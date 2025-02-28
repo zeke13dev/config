@@ -241,9 +241,12 @@ require('packer').startup(function(use)
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
 
+  -- latex viewing
+
 
   -- Themes
   use 'lewis6991/impatient.nvim'
+  use 'folke/snacks.nvim'
   use 'folke/trouble.nvim'
   use 'folke/tokyonight.nvim'
   use { "catppuccin/nvim", as = "catppuccin" }
@@ -418,26 +421,38 @@ vim.o.clipboard = 'unnamedplus'
 
 -- File: lua//sml.lua --
 
---[[
-local configs = require('lspconfig.configs')
 local lspconfig = require('lspconfig')
 
-if not configs.millet_ls then
-  configs.millet_ls = {
-    default_config = {
-      cmd = { "millet-ls" },
-      filetypes = { "sml" },
-      root_dir = lspconfig.util.root_pattern("millet.toml", ".git", "."),
-      single_file_support = true,
-      on_attach = function(client, bufnr)
-        print("Millet LSP attached to buffer " .. bufnr)
-      end,
-    },
-  }
-end
+lspconfig.millet.setup({
+  cmd = { "millet", "." }, -- Use explicit command
+  filetypes = { "sml" },
+  root_dir = lspconfig.util.root_pattern("millet.toml") or lspconfig.util.find_git_ancestor,
+  single_file_support = true,
+})
 
-lspconfig.millet_ls.setup({})
---]]
+-- Auto-detect .sml files and apply syntax highlighting
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.sml",
+  callback = function()
+    vim.bo.filetype = "sml"
+  end,
+})
+
+-- Keybindings for LSP features (rename, hover, definition, etc.)
+vim.api.nvim_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ca', '<Cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
+
+-- Set up autoformatting when saving .sml files
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.sml",
+  callback = function()
+    vim.lsp.buf.format({ async = true })
+  end,
+})
+
+vim.lsp.set_log_level("debug")
 
 -- File: lua//theme.lua --
 

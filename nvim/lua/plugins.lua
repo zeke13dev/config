@@ -1,62 +1,76 @@
--- lua/plugins.lua
+require("lazy").setup({
 
+  -- Terminal
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    config = function()
+      require("toggleterm").setup{
+        open_mapping = [[<leader>t]],  -- Open with <leader>t
+        direction = "float",           -- Use floating window for terminal
+        shade_terminals = true,        -- Dim background for better visibility
+        start_in_insert = true,        -- Start terminal in insert mode
+        shell = vim.o.shell,           -- Use system default shell
+      }
+    end,
+  },
 
--- Initialize Packer
-vim.cmd([[packadd packer.nvim]])
+  -- UI Enhancements
+  { "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
 
-require('packer').startup(function(use)
-  -- Packer itself
-  use 'wbthomason/packer.nvim'
-
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-  }
-
+  -- Markdown + LaTeX Preview
+  {
+    "iamcco/markdown-preview.nvim",
+    build = "cd app && npm install",
+    config = function()
+      vim.g.mkdp_auto_start = 1 -- Auto-start preview when opening a Markdown file
+      vim.g.mkdp_browser = "firefox" -- Change this to your preferred browser
+    end,
+  },
 
   -- Themes
-  use 'lewis6991/impatient.nvim'
-  use 'folke/trouble.nvim'
-  use 'folke/tokyonight.nvim'
-  use { "catppuccin/nvim", as = "catppuccin" }
-  use 'marko-cerovac/material.nvim'
-  use 'rebelot/kanagawa.nvim'
-  use 'navarasu/onedark.nvim'
-  use "EdenEast/nightfox.nvim"
+  { "HiPhish/nvim-ts-rainbow2" },
+  "lewis6991/impatient.nvim",
+  "folke/trouble.nvim",
+  "folke/tokyonight.nvim",
+  { "catppuccin/nvim", name = "catppuccin" },
+  "marko-cerovac/material.nvim",
+  "rebelot/kanagawa.nvim",
+  "navarasu/onedark.nvim",
+  "EdenEast/nightfox.nvim",
 
-  use 'nvim-treesitter/nvim-treesitter'
+  -- Syntax highlighting
+  { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 
-  -- Telescope for fuzzy finding
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = { 'nvim-lua/plenary.nvim' }
-  }
+  -- Telescope (fuzzy finder)
+  { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
 
-  -- NerdTree
-  use 'preservim/nerdtree'
+  -- File navigation
+  "preservim/nerdtree",
 
-  -- LSP configurations and Rust tools
-  use 'neovim/nvim-lspconfig'
-  use 'simrat39/rust-tools.nvim'
-  use 'lervag/vimtex'
+  -- LSP & Rust tools
+  "neovim/nvim-lspconfig",
+  "simrat39/rust-tools.nvim",
 
-  use {
-  'saecki/crates.nvim',
-  requires = { 'nvim-lua/plenary.nvim' },
-  config = function()
-    require('crates').setup()
-  end,
-}
+  -- LaTeX support
+  "lervag/vimtex",
 
-  -- DUCKIES
-  use {
-    'tamton-aquib/duck.nvim',
+  -- Crate management for Rust
+  {
+    "saecki/crates.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function() require("crates").setup() end,
+  },
+
+  -- DUCKIES 🦆
+  {
+    "tamton-aquib/duck.nvim",
     config = function()
-        vim.keymap.set('n', '<leader>dd', function() require("duck").hatch("🦆", 10) end, {}) -- Fast duck
-        vim.keymap.set('n', '<leader>dc', function() require("duck").hatch("🐈", 0.75) end, {}) -- Mellow cat
-        vim.keymap.set('n', '<leader>dk', function() require("duck").cook() end, {})
-        vim.keymap.set('n', '<leader>da', function() require("duck").cook_all() end, {})
-    end
-  }
-end)
+      vim.keymap.set("n", "<leader>dd", function() require("duck").hatch("🦆", 10) end, {}) -- Fast duck
+      vim.keymap.set("n", "<leader>dc", function() require("duck").hatch("🐈", 0.75) end, {}) -- Mellow cat
+      vim.keymap.set("n", "<leader>dk", function() require("duck").cook() end, {})
+      vim.keymap.set("n", "<leader>da", function() require("duck").cook_all() end, {})
+    end,
+  },
 
+})

@@ -1,3 +1,5 @@
+vim.opt.rtp:prepend("~/.config/nvim/lazy")
+
 -- Load individual configuration modules
 require('settings')      -- Basic settings
 require('plugins')       -- Plugin setup and installation

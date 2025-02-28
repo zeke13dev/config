@@ -157,6 +157,11 @@ _G.packer_plugins = {
     path = "/Users/zeke/.local/share/nvim/site/pack/packer/start/rust-tools.nvim",
     url = "https://github.com/simrat39/rust-tools.nvim"
   },
+  ["snacks.nvim"] = {
+    loaded = true,
+    path = "/Users/zeke/.local/share/nvim/site/pack/packer/start/snacks.nvim",
+    url = "https://github.com/folke/snacks.nvim"
+  },
   ["telescope.nvim"] = {
     loaded = true,
     path = "/Users/zeke/.local/share/nvim/site/pack/packer/start/telescope.nvim",

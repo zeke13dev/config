@@ -42,10 +42,9 @@ end, { noremap = true, silent = true })
 
 
 -- Use Telescope to show diagnostics in a floating popup
-vim.api.nvim_set_keymap('n', '<leader>e', '<Cmd>Telescope diagnostics<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>E', '<Cmd>Telescope diagnostics<CR>', { noremap = true, silent = true })
 
 -- Use Telescope to show diagnostics filtered by buffer in a split
-vim.api.nvim_set_keymap('n', '<leader>E', '<Cmd>Telescope diagnostics bufnr=0<CR>', { noremap = true, silent = true })
 
 -- silly ahh canada
 vim.api.nvim_set_keymap('n', '<Leader>L', 'ithe mediocre province of British Columbia<Esc>', { noremap = true, silent = true })
@@ -59,4 +58,12 @@ end, { noremap = true, silent = true, desc = "Connect and navigate with NERDTree
 
 -- latex
 vim.api.nvim_set_keymap('n', '<leader>lc', ':TexSplitCompile<CR>', { noremap = true, silent = true })
+
+-- telescope file finder
+vim.keymap.set('n', '<leader>e', ':Telescope find_files find_command=fd,--type,f,--hidden,--exclude,.git<CR>', { noremap = true, silent = true })
+
+-- terminal
+vim.keymap.set("n", "<leader>t", "<cmd>ToggleTerm direction=float<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("t", "<C-w>", "<C-\\><C-n><C-w>", { noremap = true, silent = true }) -- Enable normal mode window switching
 
