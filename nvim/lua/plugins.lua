@@ -29,7 +29,6 @@ require("lazy").setup({
   },
 
   -- Themes
-  { "HiPhish/nvim-ts-rainbow2" },
   "lewis6991/impatient.nvim",
   "folke/trouble.nvim",
   "folke/tokyonight.nvim",

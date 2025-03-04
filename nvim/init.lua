@@ -8,6 +8,7 @@ require('rust')    -- Rust-specific configurations
 require('python')
 require('sml')
 require('c0')
+require('nextjs')
 require('theme')
 require('latex')
 
