@@ -42,7 +42,7 @@ require('lspconfig').pyright.setup({
   settings = {
     python = {
       analysis = {
-        typeCheckingMode = "basic",  -- Options: off, basic, strict
+        typeCheckingMode = "off",  -- Options: off, basic, strict
         autoSearchPaths = true,
         useLibraryCodeForTypes = true,
       },

@@ -1,20 +1,18 @@
 require("lazy").setup({
 
   -- Terminal
-  {
-    "akinsho/toggleterm.nvim",
-    version = "*",
-    config = function()
-      require("toggleterm").setup{
-        open_mapping = [[<leader>t]],  -- Open with <leader>t
-        direction = "float",           -- Use floating window for terminal
-        shade_terminals = true,        -- Dim background for better visibility
-        start_in_insert = true,        -- Start terminal in insert mode
-        shell = vim.o.shell,           -- Use system default shell
-      }
-    end,
-  },
-
+    {
+        "akinsho/toggleterm.nvim",
+        version = "*",
+        config = function()
+            require("toggleterm").setup{
+                direction = "float",  -- Floating terminal
+                shade_terminals = true,  -- Dim background for better visibility
+                start_in_insert = true,  -- Start terminal in insert mode
+                shell = vim.o.shell,  -- Use system default shell
+            }
+        end,  -- This properly closes the function
+    },
   -- UI Enhancements
   { "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
 

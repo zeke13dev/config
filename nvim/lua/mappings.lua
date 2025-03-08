@@ -63,7 +63,17 @@ vim.api.nvim_set_keymap('n', '<leader>lc', ':TexSplitCompile<CR>', { noremap = t
 vim.keymap.set('n', '<leader>e', ':Telescope find_files find_command=fd,--type,f,--hidden,--exclude,.git<CR>', { noremap = true, silent = true })
 
 -- terminal
-vim.keymap.set("n", "<leader>t", "<cmd>ToggleTerm direction=float<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("t", "<C-w>", "<C-\\><C-n><C-w>", { noremap = true, silent = true }) -- Enable normal mode window switching
+-- Ensure ToggleTerm opens only with <Space>t
+vim.keymap.set("n", "<Space>t", "<cmd>ToggleTerm direction=float<CR>", { noremap = true, silent = true })
 
+-- Make sure <leader> is set to <Space> if not already
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+-- Prevent \ (backslash) from doing anything
+vim.keymap.set("n", "\\", "<Nop>", { noremap = true, silent = true })
+vim.keymap.set("t", "\\", "<Nop>", { noremap = true, silent = true }) -- Ensure it doesn't trigger in terminal mode either
+
+-- Terminal mode keybindings
+vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true }) -- Exit terminal mode
+vim.api.nvim_set_keymap("t", "<C-w>", "<C-\\><C-n><C-w>", { noremap = true, silent = true }) -- Enable window switching in terminal mode
