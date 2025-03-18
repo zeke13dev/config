@@ -14,3 +14,4 @@ vim.o.wrap = false
 
 -- Use system clipboard
 vim.o.clipboard = 'unnamedplus'
+vim.o.scrolloff = 10
