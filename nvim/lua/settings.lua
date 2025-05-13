@@ -1,4 +1,5 @@
 -- General settings
+vim.o.guifont = "JetBrainsMono Nerd Font:h14"
 vim.o.termguicolors = true  -- Enable true color support
 vim.opt.expandtab = true
 vim.opt.tabstop = 4

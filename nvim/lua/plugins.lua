@@ -1,18 +1,40 @@
 require("lazy").setup({
 
+  -- Colorizer
+  {
+    'NvChad/nvim-colorizer.lua',
+    config = function()
+      require('colorizer').setup({
+        "*", -- enable for all filetypes
+      }, {
+        -- Second argument is for global options
+        user_default_options = {
+          RGB = true,
+          RRGGBB = true,
+          names = false,
+          css = true,
+          tailwind = true,
+          sass = { enable = true },
+          mode = "virtualtext", -- or "background"
+        }
+      })
+    end,
+  },
+
   -- Terminal
-    {
-        "akinsho/toggleterm.nvim",
-        version = "*",
-        config = function()
-            require("toggleterm").setup{
-                direction = "float",  -- Floating terminal
-                shade_terminals = true,  -- Dim background for better visibility
-                start_in_insert = true,  -- Start terminal in insert mode
-                shell = vim.o.shell,  -- Use system default shell
-            }
-        end,  -- This properly closes the function
-    },
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    config = function()
+      require("toggleterm").setup {
+        direction = "float",  -- Floating terminal
+        shade_terminals = true,  -- Dim background for better visibility
+        start_in_insert = true,  -- Start terminal in insert mode
+        shell = vim.o.shell,  -- Use system default shell
+      }
+    end,
+  },
+
   -- UI Enhancements
   { "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
 
@@ -71,3 +93,4 @@ require("lazy").setup({
   },
 
 })
+

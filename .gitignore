@@ -6,3 +6,4 @@
 !kitty/**
 !requirements.txt
 nvim/plugin/**
+!nvim/lazy/
