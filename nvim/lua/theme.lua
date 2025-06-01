@@ -1,6 +1,6 @@
 -- better syntax highlighting
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { "latex", "python", "rust", "lua", "c", "javascript",
+  ensure_installed = { "latex", "python", "rust", "lua", "c", "javascript", "ocaml",
     "typescript", 
     "tsx", 
     "html", 
