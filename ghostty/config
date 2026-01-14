@@ -1,0 +1,6 @@
+#theme = "/Users/zeke/.config/ghostty/themes/carbonfox.ghostty"
+theme = kanagawabones
+font-family = "JetBrainsMono Nerd Font, Noto Color Emoji"
+font-size = 14
+font-feature-settings = "liga" 1, "calt" 1, "cv01" 1, "cv02" 1, "ss01" 1
+keybind = shift+enter=text:\n

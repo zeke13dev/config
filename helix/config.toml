@@ -1,0 +1,35 @@
+# Set your theme. Helix has catppuccin built-in.
+# Variants are: "catppuccin_latte", "catppuccin_frappe", "catppuccin_macchiato", "catppuccin_mocha"
+theme = "kanagawa"
+
+[editor.soft-wrap]
+enable = true
+
+[editor]
+# equivalent to vim.o.cursorline = true
+cursorline = true
+# Your whitespace settings
+whitespace.render = { space = "none", tab = "none", newline = "none" }
+line-number = "absolute"
+true-color = true
+
+[editor.cursor-shape]
+# block for normal, bar for insert
+insert = "bar"
+normal = "block"
+select = "bar"
+
+[editor.statusline]
+# Simplified statusline configuration
+left = ["mode", "spinner"]
+center = ["file-name"]
+right = ["diagnostics", "selections", "position", "file-encoding", "file-type"]
+separator = "│"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[keys.normal]
+# Paragraph navigation (vim style)
+"K" = "goto_prev_paragraph"
+"J" = "goto_next_paragraph"

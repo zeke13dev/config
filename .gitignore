@@ -1,9 +1,34 @@
 *
 !.gitignore
+!README.md
+
+# Setup scripts
+!setup.sh
+!setup-ubuntu.sh
+
+# Editor configs
 !nvim/
-!kitty/
 !nvim/**
-!kitty/**
-!requirements.txt
 nvim/plugin/**
 !nvim/lazy/
+!helix/
+!helix/**
+
+# Terminal configs
+!ghostty/
+!ghostty/**
+
+# Shell configs
+!oh-my-posh/
+!oh-my-posh/**
+
+# File manager
+!yazi/
+!yazi/**
+
+# Git config
+!git/
+!git/**
+
+# Other
+!requirements.txt

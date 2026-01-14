@@ -1,0 +1,70 @@
+# General indentation settings (your defaults)
+# These can be overridden per-language
+#[language-server.rust-analyzer]
+#config = { checkOnSave = { command = "clippy" } }
+[language-server.rust-analyzer]
+command = "rustup"
+args = ["run", "stable", "rust-analyzer"]
+
+# Python Setup
+[[language]]
+name = "python"
+language-servers = [ "pyright" ]
+# Configure formatter to run on save
+[language.formatter]
+command = "black"
+args = ["-"] # read from stdin
+# Auto-format on save
+auto-format = true
+
+# Rust Setup
+[[language]]
+name = "rust"
+language-servers = [ "rust-analyzer" ]
+[language.formatter]
+command = "rustfmt"
+
+# TypeScript / JavaScript for Next.js
+[[language]]
+name = "typescript"
+language-servers = [ "typescript-language-server", "tailwindcss-language-server" ]
+indent = { tab-width = 2, unit = "  " } # Override default indent
+[language.formatter]
+command = "prettier"
+args = ["--parser", "typescript"]
+auto-format = true
+
+[[language]]
+name = "javascript"
+indent = { tab-width = 2, unit = "  " }
+[language.formatter]
+command = "prettier"
+args = ["--parser", "typescript"]
+auto-format = true
+
+# LaTeX Setup
+[[language]]
+name = "latex"
+scope = "text.tex.latex"
+# Enable line wrapping for TeX files
+soft-wrap = { enable = true }
+language-servers = [ "texlab" ]
+[language.formatter]
+command = "latexindent"
+
+# OCaml and SML
+[[language]]
+name = "ocaml"
+language-servers = ["ocaml-lsp"]
+
+[[language]]
+name = "sml"
+language-servers = ["millet"]
+
+[[language]]
+name = "cpp"
+language-servers = ["clangd"]
+
+[language-server.clangd]
+command = "/opt/homebrew/opt/llvm/bin/clangd"
+args = ["--background-index", "--clang-tidy"]
